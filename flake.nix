@@ -13,6 +13,7 @@
 
           buildInputs = with pkgs; [
               pkgs.go           
+              pkgs.gopls
           ];
 
           shellHook = ''

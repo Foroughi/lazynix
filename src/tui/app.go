@@ -1,7 +1,7 @@
 package tui
 
 import (
-	config "github.com/Foroughi/lazynix/ui/config"
+	config "github.com/Foroughi/lazynix/src/config"
 	tea "github.com/charmbracelet/bubbletea"
 	"time"
 )

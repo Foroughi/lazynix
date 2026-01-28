@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Foroughi/lazynix/ui/tui"
+	"github.com/Foroughi/lazynix/src/tui"
 )
 
 func main() {

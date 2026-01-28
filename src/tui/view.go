@@ -7,9 +7,9 @@ import (
 func (m model) mainView() string {
 
 	if m.screen == ScreenFlake {
-		return m.flakeView()
+		return m.flake.View(m)
 	} else {
-		return m.profileView()
+		return m.profile.View(m)
 	}
 }
 
@@ -20,8 +20,8 @@ func (m model) View() string {
 
 	return lipgloss.JoinVertical(
 		lipgloss.Top,
-		m.topBar(),
+		m.topbar.View(m),
 		m.mainView(),
-		m.statusBar(),
+		m.statusbar.View(m),
 	)
 }

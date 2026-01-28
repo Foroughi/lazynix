@@ -25,7 +25,7 @@ lazynix aims to provide a simple and efficient terminal interface for managing N
 
 2. Run the application:
    ```bash
-   go run src/main.go
+   go run main.go
    ```
 
 ## Development

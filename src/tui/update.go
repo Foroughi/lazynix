@@ -21,6 +21,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
+
+		for i := range m.flake.sections {
+
+			m.flake.sections[i].height = msg.Height - 2
+			m.flake.sections[i].width = msg.Width * m.flake.sections[i].widthRatio / 12
+		}
 	}
 
 	var cmds []tea.Cmd

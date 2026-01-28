@@ -5,23 +5,43 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func column(title string, items []string, width, height int) string {
+func column(view listModel, isActive bool) string {
 
 	titleStyle := inactiveSectionTitleStyle.
 		Bold(true).
-		Width(width).
+		Width(view.width).
 		Padding(0, 1)
 
+	if isActive {
+
+		titleStyle = activeSectionTitleStyle.
+			Bold(true).
+			Width(view.width).
+			Padding(0, 1)
+	}
 	boxStyle := inactiveSectionStyle.
-		Width(width).
-		Height(height).
+		Width(view.width).
+		Height(view.height).
 		Padding(0, 0)
 
-	var lines []string
-	lines = append(lines, titleStyle.Render(title))
+	if isActive {
 
-	for _, it := range items {
-		lines = append(lines, inactiveSectionItemStyle.Padding(0, 1).Render(it))
+		boxStyle = activeSectionStyle.
+			Width(view.width).
+			Height(view.height).
+			Padding(0, 0)
+	}
+
+	var lines []string
+	lines = append(lines, titleStyle.Render(view.title))
+
+	for i, it := range view.items {
+		if i == view.activeItem {
+			lines = append(lines, activeSectionItemStyle.Width(view.width).Padding(0, 1).Render(it.text))
+		} else {
+
+			lines = append(lines, inactiveSectionItemStyle.Width(view.width).Padding(0, 1).Render(it.text))
+		}
 	}
 
 	return boxStyle.Render(
@@ -30,41 +50,50 @@ func column(title string, items []string, width, height int) string {
 }
 
 func (m flakeModel) View(model model) string {
-	height := model.height - 2
 
-	colWidth1 := model.width * 2 / 12
-	colWidth2 := model.width * 5 / 12
-	colWidth3 := (model.width*5 + 11) / 12
+	var sectionViews []string
 
-	left := column(
-		"Inputs",
-		[]string{"nixpkgs", "home-manager", "flake-utils"},
-		colWidth1,
-		height,
-	)
+	for i, it := range m.sections {
 
-	middle := column(
-		"Outputs",
-		[]string{"packages", "apps", "devShells"},
-		colWidth2,
-		height,
-	)
+		if m.activeSection == i {
+			sectionViews = append(sectionViews, column(it, true))
+		} else {
 
-	right := column(
-		"Systems",
-		[]string{"x86_64-linux", "aarch64-linux"},
-		colWidth3,
-		height,
-	)
+			sectionViews = append(sectionViews, column(it, false))
+		}
+	}
 
 	return lipgloss.JoinHorizontal(
 		lipgloss.Top,
-		left,
-		middle,
-		right,
+		sectionViews...,
 	)
 }
 func (m flakeModel) Update(msg tea.Msg) (flakeModel, tea.Cmd) {
+
+	switch msg := msg.(type) {
+
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "l":
+			m.activeSection++
+		case "h":
+
+			m.activeSection--
+
+		case "j":
+			m.sections[m.activeSection].activeItem++
+		case "k":
+			m.sections[m.activeSection].activeItem--
+		}
+	}
+
+	if m.activeSection >= len(m.sections) {
+		m.activeSection = 0
+	}
+
+	if m.activeSection < 0 {
+		m.activeSection = len(m.sections) - 1
+	}
 
 	return m, nil
 }

@@ -35,10 +35,12 @@ type flakeModel struct {
 }
 
 type listModel struct {
-	title  string
-	width  int
-	height int
-	items  []itemModel
+	title      string
+	width      int
+	height     int
+	items      []itemModel
+	widthRatio int
+	activeItem int
 }
 
 type itemModel struct {

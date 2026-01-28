@@ -13,23 +13,19 @@ var (
 			Background(lipgloss.Color("#11111b")).
 			Foreground(lipgloss.Color("#a6adc8"))
 
+	activeSectionTitleStyle = lipgloss.NewStyle().
+				Background(lipgloss.Color("#04a5e5")).
+				Foreground(lipgloss.Color("#ffffff"))
 	inactiveSectionTitleStyle = lipgloss.NewStyle().
-					Background(lipgloss.Color("#11111b")).
-					Foreground(lipgloss.Color("#a6adc8"))
+					Background(lipgloss.Color("#1e2030")).
+					Foreground(lipgloss.Color("#ffffff"))
 
+	activeSectionStyle   = lipgloss.NewStyle()
 	inactiveSectionStyle = lipgloss.NewStyle()
 
-	inactiveSectionItemStyle = lipgloss.NewStyle()
-
-	activeSectionTitleStyle = lipgloss.NewStyle().
-				Background(lipgloss.Color("##96faa0")).
-				Foreground(lipgloss.Color("#000000"))
-
-	activeSectionStyle = lipgloss.NewStyle().
-				Background(lipgloss.Color("##96faa0")).
-				Foreground(lipgloss.Color("#000000"))
-
 	activeSectionItemStyle = lipgloss.NewStyle().
-				Background(lipgloss.Color("##96faa0")).
+				Background(lipgloss.Color("#8aadf4")).
 				Foreground(lipgloss.Color("#000000"))
+
+	inactiveSectionItemStyle = lipgloss.NewStyle()
 )

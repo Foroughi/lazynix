@@ -28,4 +28,20 @@ type statusbarModel struct {
 	loading bool
 }
 type profileModel struct{}
-type flakeModel struct{}
+
+type flakeModel struct {
+	activeSection int
+	sections      []listModel
+}
+
+type listModel struct {
+	title  string
+	width  int
+	height int
+	items  []itemModel
+}
+
+type itemModel struct {
+	text     string
+	selected bool
+}
